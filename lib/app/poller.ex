@@ -4,7 +4,7 @@ defmodule App.Poller do
 
   # Server
 
-  def start_link do
+  def start_link(_arg) do
     Logger.log(:info, "Started poller")
     GenServer.start_link(__MODULE__, :ok, name: __MODULE__)
   end

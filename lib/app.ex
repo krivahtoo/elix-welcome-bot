@@ -2,7 +2,13 @@ defmodule App do
   use Application
 
   def start(_type, _args) do
+    unless Mix.env == :prod do
+      Dotenv.load
+      Mix.Task.run("loadconfig")
+    end
+
     bot_name = Application.get_env(:app, :bot_name)
+    port = String.to_integer(Application.get_env(:app, :port))
 
     unless String.valid?(bot_name) do
       IO.warn("""
@@ -15,11 +21,10 @@ defmodule App do
       IO.warn("An empty bot_name env will make '/anycommand@' valid")
     end
 
-    import Supervisor.Spec, warn: false
-
     children = [
-      worker(App.Poller, []),
-      worker(App.Matcher, [])
+      # App.Poller,
+      App.Matcher,
+      Plug.Adapters.Cowboy.child_spec(scheme: :http, plug: App.Server, options: [port: port])
     ]
 
     opts = [strategy: :one_for_one, name: App.Supervisor]
