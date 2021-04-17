@@ -8,4 +8,4 @@ config :app,
 config :nadia,
   token: {:system, "TOKEN", ""}
 
-import_config "#{Mix.env}.exs"
+import_config "#{Mix.env()}.exs"

@@ -2,8 +2,8 @@ defmodule App do
   use Application
 
   def start(_type, _args) do
-    unless Mix.env == :prod do
-      Dotenv.load
+    unless Mix.env() == :prod do
+      Dotenv.load()
       Mix.Task.run("loadconfig")
     end
 
@@ -21,7 +21,9 @@ defmodule App do
       IO.warn("An empty bot_name env will make '/anycommand@' valid")
     end
 
-    Nadia.set_webhook([url: "#{System.get_env("DOMAIN")}/bot/1e4abe972553c1f2994e9ce34093bcb07f6dc893"])
+    Nadia.set_webhook(
+      url: "#{System.get_env("DOMAIN")}/bot/1e4abe972553c1f2994e9ce34093bcb07f6dc893"
+    )
 
     children = [
       App.Matcher,

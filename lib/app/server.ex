@@ -1,8 +1,10 @@
 defmodule App.Server do
   use Plug.Router
-  if Mix.env == :dev do
+
+  if Mix.env() == :dev do
     use Plug.Debugger
   end
+
   use Plug.ErrorHandler
   require Logger
   plug(Plug.Logger, log: :debug)
@@ -17,8 +19,9 @@ defmodule App.Server do
   # Replace with unique string
   post "/bot/1e4abe972553c1f2994e9ce34093bcb07f6dc893" do
     {:ok, body, conn} = read_body(conn)
-    body = Poison.decode!(body, [keys: :atoms])
-    result = Nadia.Parser.parse_result([body],"getUpdates")
+    body = Poison.decode!(body, keys: :atoms)
+    result = Nadia.Parser.parse_result([body], "getUpdates")
+
     {:ok, result}
     |> process_messages
 

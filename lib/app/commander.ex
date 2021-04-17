@@ -1,5 +1,4 @@
 defmodule App.Commander do
-  @bot_name Application.get_env(:app, :bot_name)
 
   # Code injectors
 
