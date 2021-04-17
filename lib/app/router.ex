@@ -168,6 +168,18 @@ defmodule App.Router do
     generate_command(command, {module, function})
   end
 
+  # Help command
+
+  defmacro help(do: function) do
+    generate_command("help", function)
+  end
+
+  # Start command
+
+  defmacro start(do: function) do
+    generate_command("start", function)
+  end
+
   ## Inline query
 
   defmacro inline_query(do: function) do

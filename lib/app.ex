@@ -21,8 +21,9 @@ defmodule App do
       IO.warn("An empty bot_name env will make '/anycommand@' valid")
     end
 
+    Nadia.set_webhook([url: "#{System.get_env("DOMAIN")}/bot/1e4abe972553c1f2994e9ce34093bcb07f6dc893"])
+
     children = [
-      # App.Poller,
       App.Matcher,
       Plug.Adapters.Cowboy.child_spec(scheme: :http, plug: App.Server, options: [port: port])
     ]

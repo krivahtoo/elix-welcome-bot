@@ -4,6 +4,14 @@ defmodule App.Commands do
 
   alias App.Commands.Outside
 
+  # Start command
+  start do
+    send_message("""
+    Hi, #{update.message.from.first_name}
+    I am A Group welcome bot
+    """)
+  end
+
   # You can create commands in the format `/command` by
   # using the macro `command "command"`.
   command ["hello", "hi"] do

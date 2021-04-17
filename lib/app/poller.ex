@@ -54,14 +54,6 @@ defmodule App.Poller do
     -1
   end
 
-  defp process_messages({:error, error}) do
-    Logger.log(:error, error)
-
-    -1
-  end
-
-  defp process_message(nil), do: IO.puts("nil")
-
   defp process_message(message) do
     try do
       App.Matcher.match(message)
